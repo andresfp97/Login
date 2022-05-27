@@ -22,14 +22,14 @@
                          <div class="form-group">
                             <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-envelope-o bigicon"></i></span>
                             <div class="col-md-12">
-                                <input id="usuario" name="usuario" type="text" placeholder="Usuario" value="<c:out value='${usuario.user}' />" class="form-control">
+                                <input id="usuario" name="usuario" type="text" placeholder="Usuario" value="<c:out value='${Login.usuario}' />" class="form-control">
                             </div>
                         </div>
                          
                         <div class="form-group">
                             <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-envelope-o bigicon"></i></span>
                             <div class="col-md-12">
-                                <input id="pas" name="pas" type="text" placeholder="Contraseña" value="<c:out value='${usuario.pas}' />" class="form-control">
+                                <input id="pas" name="pas" type="text" placeholder="Contraseña" value="<c:out value='${Login.pas}' />" class="form-control">
                             </div>
                         </div>
                         
