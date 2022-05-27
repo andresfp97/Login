@@ -25,7 +25,7 @@ import co.empresa.login.modelo.Login;
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private LoginDao  usuarioDao;
+	private LoginDao  loginDao;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -40,7 +40,8 @@ public class LoginServlet extends HttpServlet {
 	 */
 	public void init() throws ServletException {
 	
-		this.usuarioDao = new LoginDao();
+		this.loginDao = new LoginDao();
+		
 	}
 
 	/**
@@ -50,53 +51,10 @@ public class LoginServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.setContentType("Login.jsp");
 		
-		Login usuario =  new  LoginDao().select(1);
-			
-		String autorizacion = request.getHeader("Authorization");
-			
-		if (autorizacion == null)
-		{			
-			response.setStatus(response.SC_UNAUTHORIZED);
-			response.setHeader("WWW-Authenticate", 
-			   "BASIC realm=\"privileged-few\"");
-		}
-		else
-		{
-			
-			
-			String user = new String ( usuario.getUsuario());
-		    String password = new String ( usuario.getPas());
-
-			
-			String usuario = 
-			   usuarioPassword.substring(0, indice);
-
-			String password = 
-			   usuarioPassword.substring(indice + 1);
-
-			String passwordReal = 
-			   datos.getProperty(usuario);
-			
-			if (passwordReal != null && 
-			    passwordReal.equals(password))
-			{
-				// Mensaje de bienvenida
-					
-				PrintWriter out = response.getWriter();
-				out.println ("<HTML><BODY>");
-				out.println ("OK");
-				out.println ("</BODY></HTML>");	
-			} else {
-					
-				// Pedir autentificacion
-
-				response.setStatus 
-				   (response.SC_UNAUTHORIZED);
-				response.setHeader
-				   ("WWW-Authenticate", 
-				   "BASIC realm=\"privileged-few\"");
-			}
-		}
+		Login usuario =  new  Login();
+		
+		String user = new String ( usuario.getUsuario());
+	    String password = new String ( usuario.getPas());
 		
 		
 		
