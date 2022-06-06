@@ -14,7 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import co.empresa.login.dao.LoginDao;
-import co.empresa.login.modelo.Login;
+import co.empresa.login.modelo.LoginVo;
+
 
 
 
@@ -25,7 +26,7 @@ import co.empresa.login.modelo.Login;
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private LoginDao  loginDao;
+	private LoginDao loginDao;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -39,7 +40,7 @@ public class LoginServlet extends HttpServlet {
 	 * @see Servlet#init(ServletConfig)
 	 */
 	public void init() throws ServletException {
-	
+		
 		this.loginDao = new LoginDao();
 		
 	}
@@ -49,16 +50,17 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.setContentType("Login.jsp");
-		
-		Login usuario =  new  Login();
-		
-		String user = new String ( usuario.getUsuario());
-	    String password = new String ( usuario.getPas());
-		
-		
-		
-
+		String action = request.getServletPath();
+		try {
+			switch(action) {
+			default:
+				login(request, response);
+				break;
+		}
+			
+		} catch (SQLException e) {
+			 throw new ServletException(e);
+		}
 		
 	}
 	/**
@@ -66,17 +68,52 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		
+		String usuario = request.getParameter("usuario");
+		String contra = request.getParameter("pas");
+		
+		LoginVo loginVo = new LoginVo(usuario, contra);
+		
+		
+		if (loginDao.login(loginVo)) {
+			
+			response.sendRedirect("Movimientos.jsp");	
+			
+		}
+		
+		else response.sendRedirect("formulario.jsp");
+		System.out.println(contra);
 	}
 
 	
+	private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher dispatcher = request.getRequestDispatcher("usuario.jsp");
+		dispatcher.forward(request, response);
+	}
 	
 	
+	private void validar(HttpServletRequest request, HttpServletResponse response) throws ServletException, SQLException, IOException {
+		LoginDao loginDao = new LoginDao();
+		
+		String usuario = request.getParameter("usuario");
+		String contra = request.getParameter("pas");
+		
+		LoginVo loginVo = new LoginVo(usuario, contra);
+		
+		
+		if (loginDao.login(loginVo)) {
+			response.sendRedirect("Movimientos.jsp");		
+		}
+		
+	}
 	
 	
-	
-	
-	
+	private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, SQLException, IOException {	
+		RequestDispatcher dispatcher = request.getRequestDispatcher("formulario.jsp");
+		dispatcher.forward(request, response);
+		
+		
+	}
 	
 
 }

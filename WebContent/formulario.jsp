@@ -12,9 +12,9 @@
 </head>
 <body>
 <div class="container">
-	<div class="row">
+	<div class="row border">
         <div class="col-md-12">
-            <div class="well well-sm">
+            <div class="well well-sm abs-center">
                 <form class="form-horizontal" action="login" method="post">
                     <fieldset >
                         <legend class="text-center header bg-dark text-white">Ingresar</legend>
@@ -22,14 +22,14 @@
                          <div class="form-group">
                             <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-envelope-o bigicon"></i></span>
                             <div class="col-md-12">
-                                <input id="usuario" name="usuario" type="text" placeholder="Usuario" value="<c:out value='${Login.usuario}' />" class="form-control">
+                                <input id="usuario" name="usuario" type="text" placeholder="Usuario"  class="form-control" required>
                             </div>
                         </div>
                          
                         <div class="form-group">
                             <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-envelope-o bigicon"></i></span>
                             <div class="col-md-12">
-                                <input id="pas" name="pas" type="text" placeholder="Contraseña" value="<c:out value='${Login.pas}' />" class="form-control">
+                                <input id="pas" name="pas" type="password" placeholder="Contraseña"  class="form-control" required>
                             </div>
                         </div>
                         

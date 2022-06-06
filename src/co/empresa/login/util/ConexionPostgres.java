@@ -6,28 +6,31 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ConexionPostgreSQL {
+public class ConexionPostgres {
 	
 	private Connection con = null;
-	private static ConexionPostgreSQL db;
+	private static ConexionPostgres db;
 	private PreparedStatement preparedStatement;
 	
 	private static final String url= "jdbc:postgresql://localhost:5432/";
-	private static final String dbName = "Login";
+	private static final String dbName = "login";
     private static final String driver = "org.postgresql.Driver";
     private static final String userName = "postgres";
     private static final String password = "Laudid9761";
     
-    public ConexionPostgreSQL() {
+    public ConexionPostgres() {
 		try {
 			Class.forName(driver);
 			con = (Connection)DriverManager.getConnection(url+dbName,userName,password);
+			System.out.println("si conecto");
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
 		}
 	}
     
@@ -39,9 +42,9 @@ public class ConexionPostgreSQL {
     	}
     }
     
-    public static ConexionPostgreSQL getConexion() {
+    public static ConexionPostgres getConexion() {
     	if (db == null) {
-    		db = new ConexionPostgreSQL();
+    		db = new ConexionPostgres();
     	}
     	
     	return db;
@@ -67,4 +70,6 @@ public class ConexionPostgreSQL {
     	return this.preparedStatement;
     	
     }
+
+
 }

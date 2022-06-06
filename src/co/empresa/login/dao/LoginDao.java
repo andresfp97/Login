@@ -4,48 +4,51 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import co.empresa.login.modelo.Login;
-import co.empresa.login.util.ConexionPostgreSQL;
+import co.empresa.login.modelo.LoginVo;
+import co.empresa.login.util.ConexionPostgres;
 
 public class LoginDao {
 
-private ConexionPostgreSQL conexion;
+private ConexionPostgres conexion;
+
 	
-	private static final String SELECT_USUARIO_BY_ID = "SELECT * FROM users WHERE id = ?;";
+	private static final String SELECT_USUARIO_BY_USERNAME = "SELECT * FROM users WHERE username = ?;";
 	
 	
 	
 	
 	public LoginDao() {
-		this.conexion = ConexionPostgreSQL.getConexion();
+		this.conexion = ConexionPostgres.getConexion();
 	}
 
 	
-	
-	public Login select(int id) {
-		Login usuario = null;
-		
-		try {
-			PreparedStatement preparedStatement = (PreparedStatement) conexion.setPreparedStatement(SELECT_USUARIO_BY_ID);
-			preparedStatement.setInt(1, id);
-			
-			ResultSet rs = conexion.query();
-			
-			while(rs.next()) {
-				String user = rs.getString("usuario");
-				String pas = rs.getString("email");
-				
-				usuario = new Login (id, user, pas);
-			}
-			
-		} catch (SQLException e) {
-			
-		}
-		
-		return usuario;
-		
-	}
+    public Boolean login(LoginVo i) {
+        try {
+           
+            PreparedStatement preparedStatement = conexion.setPreparedStatement(SELECT_USUARIO_BY_USERNAME);
+            
+            preparedStatement.setString(1, i.getUsuario());
+            
+            ResultSet rs = conexion.query();
 
+            if (rs.next()) {
+
+                if (i.getPas().equals(rs.getString("pass"))) {
+                    
+                    return true;
+                } else {
+                	
+                    return false;
+                }
+            }
+
+            return false;
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return false;
+    }
+	
 	
 }
 

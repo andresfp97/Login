@@ -9,10 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Login implements Serializable {
-
-	
-	
+public class LoginVo implements Serializable {
 
 		private Integer id;
 
@@ -20,7 +17,7 @@ public class Login implements Serializable {
 
 		private String pas;
 
-		public Login( String usuario, String pas) {
+		public LoginVo( String usuario, String pas) {
 			super();
 			this.usuario = usuario;
 			this.pas = pas;
